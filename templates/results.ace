@@ -1,0 +1,11 @@
+= content title
+  | Results
+= content main
+  h1 Results for {{.Query}}
+  hr
+
+  {{if .Results}}
+  = include _latest .Results
+  {{else}}
+  h4 No results found
+  {{end}}

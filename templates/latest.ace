@@ -1,0 +1,11 @@
+= content title
+  | Index
+= content main
+  h1 Latest Events
+  hr
+
+  {{if .Latest}}
+  = include _latest .Latest
+  {{else}}
+  h4 There are no events
+  {{end}}

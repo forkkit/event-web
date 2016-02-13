@@ -1,0 +1,27 @@
+= content title
+  | Search
+= content main
+  h1 Search Events
+  hr
+
+  div.row
+    div.col-md-6
+      form method=POST
+        div.form-group
+          label Lookup Event by ID
+          input.form-control type=text id=id name=id placeholder="Event ID"
+        div.form-group
+          button.btn.btn-default type=submit Go
+
+  div.row
+    div.col-md-6
+      form method=POST
+        div.form-group
+          label Lookup Event Root ID (optional)
+          input.form-control type=text id=rid name=rid placeholder="Root Id"
+        div.form-group
+          label Lookup Event Type (optional)
+          input.form-control type=text id=type name=type placeholder="Type"
+        div.form-group
+          button.btn.btn-default type=submit Search
+

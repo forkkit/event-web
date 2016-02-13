@@ -1,0 +1,31 @@
+= content title
+  | Event
+= content main
+  h1 Event {{.Id}}
+  hr
+
+  div.row
+    div.col-md-12
+      table.table.table-bordered
+        tbody
+          tr
+            th Record Id
+            td {{.Record.Id}}
+          tr
+            th Type
+            td {{.Record.Type}}
+          tr
+            th Time
+            td {{Timestamp .Record.Timestamp}}
+          tr
+            th Root Id
+            td {{.Record.RootId}}
+          tr
+            th Origin
+            td {{.Record.Origin}}
+          tr
+            th Metadata
+            td {{.Record.Metadata}}
+          tr
+            th Data
+            td {{.Record.Data}}

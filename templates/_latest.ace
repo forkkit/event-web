@@ -1,0 +1,19 @@
+div.row
+  div.col-md-12
+    table.table.table-bordered
+      thead
+        tr
+          th Record Id
+          th Type
+          th Time
+          th Root Id
+          th Origin
+      tbody
+      {{range .}}
+        tr
+          td <a href={{URL "event"}}/{{.Id}}>{{.Id}}</a>
+          td {{.Type}}
+          td {{Timestamp .Timestamp}}
+          td {{.RootId}}
+          td {{.Origin}}
+      {{end}}
