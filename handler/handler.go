@@ -12,7 +12,7 @@ import (
 	"github.com/yosssi/ace"
 	"golang.org/x/net/context"
 
-	"github.com/micro/event-srv/proto/event"
+	event "github.com/micro/event-srv/proto/event"
 )
 
 var (

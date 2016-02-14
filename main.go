@@ -10,7 +10,7 @@ import (
 	"syscall"
 
 	"github.com/gorilla/mux"
-	"github.com/micro/event-srv/proto/event"
+	event "github.com/micro/event-srv/proto/event"
 	"github.com/micro/event-web/handler"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/cmd"
