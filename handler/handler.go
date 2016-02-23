@@ -19,12 +19,14 @@ var (
 	templateDir = "templates"
 	opts        *ace.Options
 
-	EventClient event.EventClient
+	eventClient event.EventClient
 )
 
-func init() {
+func Init(dir string, e event.EventClient) {
+	eventClient = e
+
 	opts = ace.InitializeOptions(nil)
-	opts.BaseDir = templateDir
+	opts.BaseDir = dir
 	opts.DynamicReload = true
 	opts.FuncMap = template.FuncMap{
 		"TimeAgo": func(t int64) string {
@@ -61,7 +63,7 @@ func render(w http.ResponseWriter, r *http.Request, tmpl string, data map[string
 
 // The index page
 func Index(w http.ResponseWriter, r *http.Request) {
-	rsp, err := EventClient.Search(context.TODO(), &event.SearchRequest{
+	rsp, err := eventClient.Search(context.TODO(), &event.SearchRequest{
 		Reverse: true,
 	})
 	if err != nil {
@@ -77,7 +79,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func Latest(w http.ResponseWriter, r *http.Request) {
-	rsp, err := EventClient.Search(context.TODO(), &event.SearchRequest{
+	rsp, err := eventClient.Search(context.TODO(), &event.SearchRequest{
 		Reverse: true,
 	})
 	if err != nil {
@@ -110,7 +112,7 @@ func Search(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		rsp, err := EventClient.Search(context.TODO(), &event.SearchRequest{
+		rsp, err := eventClient.Search(context.TODO(), &event.SearchRequest{
 			Id:      rid,
 			Type:    typ,
 			Reverse: true,
@@ -140,7 +142,7 @@ func Event(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// TODO: limit/offset
-	rsp, err := EventClient.Read(context.TODO(), &event.ReadRequest{
+	rsp, err := eventClient.Read(context.TODO(), &event.ReadRequest{
 		Id: id,
 	})
 	if err != nil {
