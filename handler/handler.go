@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"path/filepath"
 	"sort"
+	"strconv"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -33,7 +34,7 @@ func Init(dir string, e event.EventClient) {
 			return timeAgo(t)
 		},
 		"Timestamp": func(t int64) string {
-			return time.Unix(t, 0).Format(time.RFC822)
+			return time.Unix(t, 0).Format("02 Jan 06 15:04:05 MST")
 		},
 		"Colour": func(s string) string {
 			return colour(s)
@@ -79,18 +80,45 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func Latest(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+
+	limit := 15
+
+	page, err := strconv.Atoi(r.Form.Get("p"))
+	if err != nil {
+		page = 1
+	}
+	if page < 1 {
+		page = 1
+	}
+
+	offset := (page * limit) - limit
+
 	rsp, err := eventClient.Search(context.TODO(), &event.SearchRequest{
 		Reverse: true,
+		Limit:   int64(limit),
+		Offset:  int64(offset),
 	})
 	if err != nil {
 		http.Redirect(w, r, "/", 302)
 		return
 	}
 
+	var less, more int
+	if len(rsp.Records) == limit {
+		more = page + 1
+	}
+
+	if page > 1 {
+		less = page - 1
+	}
+
 	sort.Sort(sortedRecords{rsp.Records})
 
 	render(w, r, "latest", map[string]interface{}{
 		"Latest": rsp.Records,
+		"Less":   less,
+		"More":   more,
 	})
 }
 
