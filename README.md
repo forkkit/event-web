@@ -1,6 +1,6 @@
 # Event Web
 
-The event web is a dashboard for the platform event-srv. 
+The event web is a dashboard for the event service. 
 
 ## Getting started
 
